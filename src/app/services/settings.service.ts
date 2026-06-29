@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 
+// Homologación exacta con tu settings.page.ts y settings.page.html
 export interface AppSettings {
   allowDelete: boolean;
 }
@@ -8,16 +10,19 @@ export interface AppSettings {
   providedIn: 'root'
 })
 export class SettingsService {
-
-  private settings: AppSettings = {
-    allowDelete: true
-  };
+  private readonly KEY_BORRAR = 'permitir_borrar_inicio';
 
   async getSettings(): Promise<AppSettings> {
-    return this.settings;
+    const { value } = await Preferences.get({ key: this.KEY_BORRAR });
+    return {
+      allowDelete: value === 'true'
+    };
   }
 
-  async saveSettings(settings: AppSettings) {
-    this.settings = settings;
+  async saveSettings(settings: AppSettings): Promise<void> {
+    await Preferences.set({
+      key: this.KEY_BORRAR,
+      value: settings.allowDelete ? 'true' : 'false'
+    });
   }
 }

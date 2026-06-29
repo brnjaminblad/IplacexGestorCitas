@@ -1,25 +1,15 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
-
+<form [formGroup]="quoteForm" (ngSubmit)="onSubmit()">
   <ion-item>
-    <ion-label position="stacked">Quote</ion-label>
-    <ion-textarea
-      formControlName="text"
-      autoGrow="true">
-    </ion-textarea>
+    <ion-label position="stacked">Cita (Mín. 5 caracteres)</ion-label>
+    <ion-input formControlName="texto" type="text" placeholder="Escriba la frase..."></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="stacked">Author</ion-label>
-    <ion-input
-      formControlName="author">
-    </ion-input>
+    <ion-label position="stacked">Autor (Mín. 2 caracteres)</ion-label>
+    <ion-input formControlName="autor" type="text" placeholder="Nombre del autor..."></ion-input>
   </ion-item>
 
-  <ion-button
-    type="submit"
-    expand="block"
-    [disabled]="form.invalid">
-    Add +
+  <ion-button expand="block" type="submit" [disabled]="quoteForm.invalid">
+    AGREGAR
   </ion-button>
-
 </form>

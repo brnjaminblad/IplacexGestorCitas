@@ -1,52 +1,31 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-
-import {
-  IonButton,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonTextarea
-} from '@ionic/angular/standalone';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { IonItem, IonLabel, IonInput, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { Quote } from '../../models/quote.model';
 
 @Component({
   selector: 'app-quote-form',
-  standalone: true,
   templateUrl: './quote-form.component.html',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    IonButton,
-    IonInput,
-    IonItem,
-    IonLabel,
-    IonTextarea
-  ]
+  styleUrls: ['./quote-form.component.scss'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, IonItem, IonLabel, IonInput, IonButton, IonIcon]
 })
 export class QuoteFormComponent {
+  @Output() onAddQuote = new EventEmitter<Quote>();
+  quoteForm: FormGroup;
 
-  @Output() add = new EventEmitter<{ text: string; author: string }>();
+  constructor(private fb: FormBuilder) {
+    this.quoteForm = this.fb.group({
+      texto: ['', [Validators.required, Validators.minLength(5)]],
+      autor: ['', [Validators.required, Validators.minLength(2)]]
+    });
+  }
 
-  form = this.fb.group({
-    text: ['', [Validators.required, Validators.maxLength(1024)]],
-    author: ['', [Validators.required, Validators.maxLength(80)]]
-  });
-
-  constructor(private fb: FormBuilder) {}
-
-  submit() {
-    if (this.form.invalid) return;
-
-    const value = {
-      text: this.form.get('text')?.value ?? '',
-      author: this.form.get('author')?.value ?? ''
-    };
-
-    console.log('FORM EMIT:', value);
-
-    this.add.emit(value);
-
-    this.form.reset();
+  onSubmit() {
+    if (this.quoteForm.valid) {
+      this.onAddQuote.emit(this.quoteForm.value);
+      this.quoteForm.reset();
+    }
   }
 }

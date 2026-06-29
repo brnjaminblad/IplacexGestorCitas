@@ -1,30 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-  <script type="module">
-  import 'jeep-sqlite/loader';
-  </script>
   <meta charset="utf-8" />
-  <title>Ionic App</title>
-
+  <title>Gestor de Citas</title>
   <base href="/" />
-
-  <meta name="color-scheme" content="light dark" />
   <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="msapplication-tap-highlight" content="no" />
-
   <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
-
-  <!-- add to homescreen for ios -->
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 </head>
 
 <body>
-<jeep-sqlite></jeep-sqlite>
-<app-root></app-root>
+  <!-- Se añade de forma fija para evitar problemas con la carga dinámica -->
+  <jeep-sqlite></jeep-sqlite>
+  
+  <app-root></app-root>
 </body>
 
 </html>

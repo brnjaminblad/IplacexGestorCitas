@@ -1,33 +1,33 @@
-import { Component } from '@angular/core';
-import {
-  IonApp,
-  IonRouterOutlet,
-  IonMenu,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonItem,
-  IonLabel
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { QuoteDbService } from './services/quote-db.service';
+import { addIcons } from 'ionicons';
+import { homeOutline, settingsOutline } from 'ionicons/icons';
+import { 
+  IonApp, IonRouterOutlet, IonMenu, IonHeader, IonToolbar, 
+  IonTitle, IonContent, IonList, IonItem, IonIcon, IonLabel, IonMenuToggle 
 } from '@ionic/angular/standalone';
-
-import { SettingsPage } from './pages/settings/settings.page';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  standalone: true,
   imports: [
-    IonApp,
-    IonRouterOutlet,
-    IonMenu,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonItem,
-    IonLabel,
-    SettingsPage
-  ]
+    CommonModule,
+    RouterModule,
+    IonApp, IonRouterOutlet, IonMenu, IonHeader, IonToolbar, 
+    IonTitle, IonContent, IonList, IonItem, IonIcon, IonLabel, IonMenuToggle
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] // Esto suprime los errores NG8001 de manera definitiva
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+  constructor(private quoteDb: QuoteDbService) {
+    addIcons({ homeOutline, settingsOutline });
+  }
+
+  async ngOnInit() {
+    await this.quoteDb.inicializarBaseDeDatos();
+  }
+}

@@ -1,35 +1,27 @@
 <ion-app>
-
-  <!-- MENÚ LATERAL (IZQUIERDA = estándar UX) -->
-  <ion-menu contentId="main-content">
-
+  <ion-menu menuId="main-menu" contentId="main-content">
     <ion-header>
-      <ion-toolbar>
-        <ion-title>Settings</ion-title>
+      <ion-toolbar color="primary">
+        <ion-title>Gestor Citas</ion-title>
       </ion-toolbar>
     </ion-header>
-
-    <ion-content class="ion-padding">
-
-      <ion-item routerLink="/home">
-        <ion-label>Home</ion-label>
-      </ion-item>
-
-      <ion-item routerLink="/settings">
-        <ion-label>Settings Page</ion-label>
-      </ion-item>
-
-      <div class="settings-box">
-        <app-settings></app-settings>
-      </div>
-
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="/home" routerDirection="root">
+            <ion-icon slot="start" name="home-outline"></ion-icon>
+            <ion-label>Inicio</ion-label>
+          </ion-item>
+          <ion-item routerLink="/settings" routerDirection="root">
+            <ion-icon slot="start" name="settings-outline"></ion-icon>
+            <ion-label>Configuraciones</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
     </ion-content>
-
   </ion-menu>
 
-  <!-- CONTENIDO PRINCIPAL -->
   <div class="ion-page" id="main-content">
     <ion-router-outlet></ion-router-outlet>
   </div>
-
 </ion-app>
