@@ -8,6 +8,6 @@
     <ion-button color="danger" (click)="delete(q.id!)">
       Eliminar
     </ion-button>
-    <app-quote-form (add)="quoteDb.addQuote($event)"></app-quote-form>
+    <app-quote-form (add)="onAddQuote($event)"></app-quote-form>
   </ion-card>
 </ion-content>
