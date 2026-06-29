@@ -45,12 +45,14 @@ export class QuoteDbService {
     return this.ready;
   }
 
-  async loadQuotes() {
-    if (!this.db) return;
+async loadQuotes() {
+  const res = await this.db.query('SELECT * FROM quotes', []);
 
-    const res = await this.db.query('SELECT * FROM quotes');
-    this.quotes = res.values || [];
-  }
+  // FORZAR NUEVA REFERENCIA (IMPORTANTE PARA ANGULAR)
+  this.quotes = [...(res.values ?? [])];
+
+  console.log('DB LOAD:', this.quotes);
+}
 
   async addQuote(q: Quote) {
     await this.db.run(

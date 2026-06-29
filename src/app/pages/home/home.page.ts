@@ -57,23 +57,25 @@ export class HomePage implements OnInit {
     private settingsService: SettingsService
   ) {}
 
-  async ngOnInit() {
-    await this.quoteDb.init();
+async ngOnInit() {
+  await this.quoteDb.init();
+  await this.quoteDb.loadQuotes(); // 👈 CRÍTICO
 
-    if (this.quoteDb.quotes.length === 0) {
-      await this.quoteDb.addQuote({
-        text: 'La imaginación es más importante que el conocimiento.',
-        author: 'Albert Einstein'
-      });
-    }
+  if (this.quoteDb.quotes.length === 0) {
+    await this.quoteDb.addQuote({
+      text: 'La imaginación es más importante que el conocimiento.',
+      author: 'Albert Einstein'
+    });
 
-    this.loadRandomQuote();
-
-    await this.loadSettings();
+    await this.quoteDb.loadQuotes(); // 👈 CRÍTICO
   }
 
+  this.loadRandomQuote();
+  await this.loadSettings();
+}
+
 loadRandomQuote() {
-  const quotes = this.quoteDb.quotes;
+  const quotes = [...this.quoteDb.quotes];
 
   if (!quotes || quotes.length === 0) return;
 
@@ -82,11 +84,21 @@ loadRandomQuote() {
 }
 
 async addQuote(q: any) {
-  console.log('HOME RECEIVED:', q);
+  console.log('NEW QUOTE:', q);
 
-  await this.quoteDb.addQuote(q);
+  // 1. guardar en SQLite
+  await this.quoteDb.addQuote({
+    text: q.text,
+    author: q.author
+  });
 
-  this.loadRandomQuote(); // ya refresca desde service
+  // 2. recargar desde DB (fuente de verdad)
+  await this.quoteDb.loadQuotes();
+
+  // 3. actualizar UI
+  this.loadRandomQuote();
+
+  // 4. cerrar modal
   this.openModal = false;
 }
   async loadSettings() {
