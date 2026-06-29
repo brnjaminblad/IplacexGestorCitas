@@ -35,10 +35,18 @@ export class QuoteFormComponent {
 
   constructor(private fb: FormBuilder) {}
 
-  submit() {
-    if (this.form.valid) {
-      this.add.emit(this.form.value);
-      this.form.reset();
-    }
+submit() {
+  if (this.form.valid) {
+
+    const value = {
+      text: this.form.value.text ?? '',
+      author: this.form.value.author ?? ''
+    };
+
+    this.add.emit(value); //ahora es seguro
+
+    this.form.reset();
+    console.log('FORM EMIT:', this.form.value);
   }
+}
 }

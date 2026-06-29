@@ -31,7 +31,7 @@ export class QuoteCardComponent {
 
   @Input() quote!: Quote;
 
-  // 🔥 control de permisos desde Home
+  // control de permisos desde Home
   @Input() allowDelete = false;
 
   // eventos hacia Home

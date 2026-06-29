@@ -72,19 +72,23 @@ export class HomePage implements OnInit {
     await this.loadSettings();
   }
 
-  loadRandomQuote() {
-    const quotes = this.quoteDb.quotes;
-    if (!quotes.length) return;
+loadRandomQuote() {
+  const quotes = this.quoteDb.quotes;
 
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-    this.quote = quotes[randomIndex];
-  }
+  if (!quotes || quotes.length === 0) return;
 
-  async addQuote(q: any) {
-    await this.quoteDb.addQuote(q);
-    this.loadRandomQuote();
-    this.openModal = false;
-  }
+  const randomIndex = Math.floor(Math.random() * quotes.length);
+  this.quote = quotes[randomIndex];
+}
+
+async addQuote(q: any) {
+  console.log('HOME RECEIVED:', q);
+
+  await this.quoteDb.addQuote(q);
+
+  this.loadRandomQuote(); // ya refresca desde service
+  this.openModal = false;
+}
   async loadSettings() {
   this.settings = await this.settingsService.getSettings();
 }
@@ -92,4 +96,5 @@ async deleteQuote(id: number) {
   await this.quoteDb.deleteQuote(id);
   this.loadRandomQuote();
 }
+
 }
