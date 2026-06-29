@@ -75,9 +75,12 @@ async ngOnInit() {
 }
 
 loadRandomQuote() {
-  const quotes = [...this.quoteDb.quotes];
+  const quotes = [...this.quoteDb.quotes]; // CLAVE
 
-  if (!quotes || quotes.length === 0) return;
+  if (!quotes.length) {
+    this.quote = undefined as any;
+    return;
+  }
 
   const randomIndex = Math.floor(Math.random() * quotes.length);
   this.quote = quotes[randomIndex];
@@ -86,19 +89,18 @@ loadRandomQuote() {
 async addQuote(q: any) {
   console.log('NEW QUOTE:', q);
 
-  // 1. guardar en SQLite
   await this.quoteDb.addQuote({
     text: q.text,
     author: q.author
   });
 
-  // 2. recargar desde DB (fuente de verdad)
+  // IMPORTANTE: volver a cargar desde DB
   await this.quoteDb.loadQuotes();
 
-  // 3. actualizar UI
+  //  IMPORTANTE: forzar cambio de UI
+  this.quote = undefined as any;
   this.loadRandomQuote();
 
-  // 4. cerrar modal
   this.openModal = false;
 }
   async loadSettings() {
