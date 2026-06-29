@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonButton } from '@ionic/angular/standalone';
+import {
+  IonContent, IonHeader, IonTitle, IonToolbar,
+  IonItem, IonLabel, IonInput, IonTextarea, IonButton
+} from '@ionic/angular/standalone';
+
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { QuoteDbService } from '../../services/quote-db.service';
-import { QuoteFormComponent } from '../../components/quote-form/quote-form.component';
 
 @Component({
   selector: 'app-quotes',
@@ -10,25 +15,30 @@ import { QuoteFormComponent } from '../../components/quote-form/quote-form.compo
   standalone: true,
   imports: [
     CommonModule,
-    IonContent,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonButton,
-    QuoteFormComponent
+    FormsModule,
+    IonContent, IonHeader, IonTitle, IonToolbar,
+    IonItem, IonLabel, IonInput, IonTextarea, IonButton
   ]
 })
 export class QuotesPage {
 
-  constructor(public quoteDb: QuoteDbService) {}
+  text = '';
+  author = '';
 
-  addQuote(q: any) {
-    this.quoteDb.addQuote(q);
+  constructor(
+    private db: QuoteDbService,
+    private router: Router
+  ) {}
+
+  async addQuote() {
+
+    if (!this.text || !this.author) return;
+
+    await this.db.addQuote({
+      text: this.text,
+      author: this.author
+    });
+
+    this.router.navigateByUrl('/');
   }
-
-delete(id?: number) {
-  if (!id) return;
-  this.quoteDb.deleteQuote(id);
-}
 }

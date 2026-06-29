@@ -7,13 +7,16 @@ import { Quote } from '../models/quote.model';
 })
 export class QuoteDbService {
 
-  private sqlite: SQLiteConnection = new SQLiteConnection(CapacitorSQLite);
+  private sqlite = new SQLiteConnection(CapacitorSQLite);
   private db!: SQLiteDBConnection;
 
   public quotes: Quote[] = [];
 
+  private ready = false;
+
   constructor() {}
 
+  // 🔥 inicialización segura
   async init() {
     this.db = await this.sqlite.createConnection(
       'quotesdb',
@@ -34,9 +37,17 @@ export class QuoteDbService {
     `);
 
     await this.loadQuotes();
+    this.ready = true;
+  }
+
+  // 🔥 check estado
+  isInitialized(): boolean {
+    return this.ready;
   }
 
   async loadQuotes() {
+    if (!this.db) return;
+
     const res = await this.db.query('SELECT * FROM quotes');
     this.quotes = res.values || [];
   }

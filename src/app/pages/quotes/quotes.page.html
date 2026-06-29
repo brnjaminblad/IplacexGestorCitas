@@ -1,16 +1,37 @@
-<ion-content>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Crear nueva cita</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <app-quote-form (add)="addQuote($event)"></app-quote-form>
+<ion-content class="ion-padding">
 
-  <ion-card *ngFor="let q of quoteDb.quotes">
-    <ion-card-header>
-      <ion-card-title>{{ q.text }}</ion-card-title>
-      <ion-card-subtitle>{{ q.author }}</ion-card-subtitle>
-    </ion-card-header>
+  <form (ngSubmit)="addQuote()">
 
-    <ion-button color="danger" (click)="delete(q.id)">
-      Eliminar
+    <ion-item>
+      <ion-label position="stacked">Cita</ion-label>
+      <ion-textarea
+        [(ngModel)]="text"
+        name="text"
+        maxlength="1024"
+        required>
+      </ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Autor</ion-label>
+      <ion-input
+        [(ngModel)]="author"
+        name="author"
+        maxlength="80"
+        required>
+      </ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit">
+      Agregar +
     </ion-button>
-  </ion-card>
+
+  </form>
 
 </ion-content>

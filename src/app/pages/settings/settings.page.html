@@ -1,13 +1,17 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>settings</ion-title>
+    <ion-title>Configuración</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">settings</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+
+  <ion-item>
+    <ion-label>Permitir eliminar citas en Home</ion-label>
+    <ion-toggle
+      [(ngModel)]="settings.allowDelete"
+      (ionChange)="save()">
+    </ion-toggle>
+  </ion-item>
+
 </ion-content>

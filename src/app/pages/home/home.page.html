@@ -1,13 +1,40 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>home</ion-title>
+    <ion-title>Quotes App</ion-title>
+
+    <!-- ⚙️ SETTINGS -->
+    <ion-buttons slot="end">
+      <ion-button (click)="goSettings()">
+        <ion-icon name="settings"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+
+  <!-- CITAS -->
+  <div *ngIf="quote">
+
+    <h2>{{ quote.text }}</h2>
+    <p>- {{ quote.author }}</p>
+
+    <ion-button
+      *ngIf="settings.allowDelete"
+      color="danger"
+      (click)="delete(quote.id)">
+      <ion-icon name="trash"></ion-icon>
+    </ion-button>
+
+  </div>
+
+  <div *ngIf="!quote">
+    <p>No hay citas</p>
+  </div>
+
+ <ion-buttons slot="end">
+  <ion-menu-button></ion-menu-button>
+</ion-buttons>
+
 </ion-content>

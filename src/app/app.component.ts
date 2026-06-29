@@ -1,20 +1,55 @@
 import { Component } from '@angular/core';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
-import { QuoteDbService } from './services/quote-db.service';
+import {
+  IonApp,
+  IonMenu,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonItem,
+  IonLabel,
+  IonToggle,
+  IonRouterOutlet
+} from '@ionic/angular/standalone';
+
+import { FormsModule } from '@angular/forms';
+import { SettingsService } from './services/settings.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet],
+  templateUrl: './app.component.html',
+  standalone: true,
+  imports: [
+    FormsModule,
+
+    IonApp,
+    IonMenu,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonItem,
+    IonLabel,
+    IonToggle,
+    IonRouterOutlet
+  ]
 })
 export class AppComponent {
 
-  constructor(private quoteDb: QuoteDbService) {
-    this.initApp();
+  settings = {
+    allowDelete: true
+  };
+
+  constructor(private settingsService: SettingsService) {
+    this.loadSettings();
   }
 
-  async initApp() {
-    await this.quoteDb.init();
+  async loadSettings() {
+    this.settings = await this.settingsService.getSettings();
+  }
+
+  async save() {
+    await this.settingsService.saveSettings(this.settings);
   }
 
 }
