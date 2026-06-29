@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { QuoteDbService } from '../services/quote-db.service';
+import { QuoteDbService } from '../../services/quote-db.service';
 
 @Component({
   selector: 'app-quotes',
