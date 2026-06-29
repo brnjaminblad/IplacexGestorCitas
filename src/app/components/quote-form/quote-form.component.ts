@@ -26,7 +26,7 @@ import {
 })
 export class QuoteFormComponent {
 
-  @Output() add = new EventEmitter<any>();
+  @Output() add = new EventEmitter<{ text: string; author: string }>();
 
   form = this.fb.group({
     text: ['', [Validators.required, Validators.maxLength(1024)]],
@@ -35,18 +35,18 @@ export class QuoteFormComponent {
 
   constructor(private fb: FormBuilder) {}
 
-submit() {
-  if (this.form.valid) {
+  submit() {
+    if (this.form.invalid) return;
 
     const value = {
-      text: this.form.value.text ?? '',
-      author: this.form.value.author ?? ''
+      text: this.form.get('text')?.value ?? '',
+      author: this.form.get('author')?.value ?? ''
     };
 
-    this.add.emit(value); //ahora es seguro
+    console.log('FORM EMIT:', value);
+
+    this.add.emit(value);
 
     this.form.reset();
-    console.log('FORM EMIT:', this.form.value);
   }
-}
 }

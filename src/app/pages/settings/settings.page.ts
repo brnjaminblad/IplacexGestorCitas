@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { SettingsService, AppSettings } from '../../services/settings.service';
+
 import {
   IonContent,
   IonItem,
@@ -30,15 +32,25 @@ import {
 })
 export class SettingsPage implements OnInit {
 
-  settings!: AppSettings;
+  // 🔥 SIEMPRE inicializado para evitar crash en template
+  settings: AppSettings = {
+    allowDelete: false
+  };
 
   constructor(private settingsService: SettingsService) {}
 
   async ngOnInit() {
-    this.settings = await this.settingsService.getSettings();
+    const data = await this.settingsService.getSettings();
+
+    // 🔥 merge seguro de datos
+    this.settings = {
+      allowDelete: data?.allowDelete ?? false
+    };
   }
 
   async save() {
+    if (!this.settings) return;
+
     await this.settingsService.saveSettings(this.settings);
   }
 }

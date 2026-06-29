@@ -2,16 +2,23 @@
 
   <ion-item>
     <ion-label position="stacked">Quote</ion-label>
-    <ion-textarea formControlName="text"></ion-textarea>
+    <ion-textarea
+      formControlName="text"
+      autoGrow="true">
+    </ion-textarea>
   </ion-item>
 
   <ion-item>
     <ion-label position="stacked">Author</ion-label>
-    <ion-input formControlName="author"></ion-input>
+    <ion-input
+      formControlName="author">
+    </ion-input>
   </ion-item>
 
-  <!-- BOTÓN IMPORTANTE -->
-  <ion-button type="submit" expand="block" [disabled]="form.invalid">
+  <ion-button
+    type="submit"
+    expand="block"
+    [disabled]="form.invalid">
     Add +
   </ion-button>
 

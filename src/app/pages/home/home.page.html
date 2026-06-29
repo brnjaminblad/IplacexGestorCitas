@@ -12,10 +12,7 @@
   <!-- Cita actual -->
 <app-quote-card
   *ngIf="quote"
-  [quote]="quote"
-  [allowDelete]="settings?.allowDelete"
-  (next)="loadRandomQuote()"
-  (delete)="deleteQuote($event)">
+  [quote]="quote">
 </app-quote-card>
 
   <!-- FAB -->

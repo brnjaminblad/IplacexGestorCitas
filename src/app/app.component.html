@@ -1,6 +1,7 @@
 <ion-app>
 
-  <ion-menu side="end" contentId="main-content">
+  <!-- MENÚ LATERAL (IZQUIERDA = estándar UX) -->
+  <ion-menu contentId="main-content">
 
     <ion-header>
       <ion-toolbar>
@@ -9,15 +10,26 @@
     </ion-header>
 
     <ion-content class="ion-padding">
-      <app-settings></app-settings>
+
+      <ion-item routerLink="/home">
+        <ion-label>Home</ion-label>
+      </ion-item>
+
+      <ion-item routerLink="/settings">
+        <ion-label>Settings Page</ion-label>
+      </ion-item>
+
+      <div class="settings-box">
+        <app-settings></app-settings>
+      </div>
+
     </ion-content>
 
   </ion-menu>
 
+  <!-- CONTENIDO PRINCIPAL -->
   <div class="ion-page" id="main-content">
-
     <ion-router-outlet></ion-router-outlet>
-
   </div>
 
 </ion-app>
