@@ -33,7 +33,7 @@ export class HomePage implements OnInit {
   openModal: boolean = false;
   allowDelete: boolean = false;
   
-  // Guardamos el índice actual de la cita destacada para saber cuál mostrar
+  // .:: Índice de la cita actualmente mostrada ::.
   indiceCitaActual: number = 0;
 
   constructor(
@@ -56,7 +56,7 @@ export class HomePage implements OnInit {
     this.quotes = await this.quoteDb.obtenerCitas();
     
     if (this.quotes.length > 0) {
-      // Al cargar o refrescar, nos aseguramos de no desbordar el array
+      // .:: Al cargar o refrescar, nos aseguramos de no desbordar el array ::.
       if (this.indiceCitaActual >= this.quotes.length) {
         this.indiceCitaActual = 0;
       }
@@ -66,13 +66,12 @@ export class HomePage implements OnInit {
     }
   }
 
-  // LÓGICA ORGÁNICA CIRCULAR: Avanza de 1 en 1, si llega al final vuelve a 0
+  // .:: Avanza a la siguiente cita en bucle ::.
   avanzarSiguienteCita() {
     if (this.quotes.length > 1) {
-      // Incrementa el índice y aplica operador residuo (%) para volver a cero automáticamente al pasar el límite
+      // .:: Calcula el siguiente índice usando módulo para volver al inicio ::.
       this.indiceCitaActual = (this.indiceCitaActual + 1) % this.quotes.length;
       this.quote = this.quotes[this.indiceCitaActual];
-      console.log('Mostrando cita índice:', this.indiceCitaActual);
     }
   }
 

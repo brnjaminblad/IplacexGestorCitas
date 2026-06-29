@@ -14,7 +14,7 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     
-    // CONFIGURACIÓN CRÍTICA STANDALONE: Detener la app hasta que SQLite web esté listo
+    // .:: Inicializa SQLite antes de arrancar la aplicación ::.
     {
       provide: APP_INITIALIZER,
       useFactory: () => {

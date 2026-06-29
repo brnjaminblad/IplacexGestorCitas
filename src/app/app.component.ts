@@ -23,7 +23,7 @@ import {
 })
 export class AppComponent {
   constructor() {
-    // Registrar iconos visuales globales del menú lateral
+    // .:: Registra los iconos globales del menú lateral ::.
     addIcons({ homeOutline, settingsOutline });
   }
 }

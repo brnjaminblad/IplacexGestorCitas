@@ -28,7 +28,6 @@ export class QuoteDbService {
         this.dbReady = true;
       } else {
         this.dbReady = true;
-        console.log('--- ENTORNO WEB DETECTADO: Usando Persistencia LocalStorage Fallback ---');
       }
       return true;
     } catch (e) {
@@ -73,7 +72,7 @@ export class QuoteDbService {
     }));
   }
 
-  // ALIAS METHODS TO RETAIN COMPATIBILITY WITH home.page.ts
+  // .:: Métodos alias para compatibilidad con home.page.ts ::.
   async addQuote(cita: Quote): Promise<void> {
     await this.insertarCita(cita);
   }

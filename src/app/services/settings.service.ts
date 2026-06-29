@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
 
-// Homologación exacta con tu settings.page.ts y settings.page.html
+// .:: Interfaz de configuración compartida usada en ajustes y páginas ::.
 export interface AppSettings {
   allowDelete: boolean;
 }

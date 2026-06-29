@@ -10,7 +10,7 @@ import {
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
-  // REPAIR: Changed from styleUrls pointing to a missing scss file to a clean inline array properties field
+  // .:: Sin archivo de estilos externo en esta página ::.
   styles: [],
   standalone: true,
   imports: [

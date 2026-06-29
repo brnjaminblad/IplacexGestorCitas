@@ -18,22 +18,22 @@ import {
   ]
 })
 export class QuoteCardComponent {
-  // Receives the quote item properties from the parent dashboard grid view
+  // .:: Cita recibida desde el componente padre ::.
   @Input() quote!: Quote;
 
-  // Input property mapping matching the previous home config
+  // .:: Permite borrar la cita cuando está habilitado ::.
   @Input() canDelete: boolean = false;
 
-  // TEMPLATE ALIGNMENT FIX: Maps exactly onto *ngIf="allowDelete" in your HTML template
+  // .:: Controla si se muestra el botón de avance en el template ::.
   @Input() allowDelete: boolean = false;
 
-  // TEMPLATE ALIGNMENT FIX: Maps exactly onto (click)="next.emit()"
+  // .:: Evento para avanzar a la siguiente cita ::.
   @Output() next = new EventEmitter<void>();
 
-  // TEMPLATE ALIGNMENT FIX: Maps exactly onto (click)="delete.emit(...)"
+  // .:: Evento para eliminar la cita por id ::.
   @Output() delete = new EventEmitter<number>();
 
-  // Legacy fallback channel
+  // .:: Evento legado para compatibilidad ::.
   @Output() onDelete = new EventEmitter<void>();
 
   deleteClicked() {

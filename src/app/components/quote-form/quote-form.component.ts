@@ -24,13 +24,13 @@ export class QuoteFormComponent {
 
   onSubmit() {
     if (this.quoteForm.valid) {
-      // FIX: Extract Spanish values and map them onto the English property interface structure
+      // .:: Construye el objeto Quote a partir de los campos del formulario ::.
       const nuevaCita: Quote = {
         text: this.quoteForm.value.texto,
         author: this.quoteForm.value.autor
       };
 
-      // Emit the correctly formatted object
+      // .:: Emite la nueva cita y limpia el formulario ::.
       this.onAddQuote.emit(nuevaCita);
       this.quoteForm.reset();
     }
