@@ -1,0 +1,63 @@
+import { Injectable } from '@angular/core';
+import { CapacitorSQLite, SQLiteConnection, SQLiteDBConnection } from '@capacitor-community/sqlite';
+import { Quote } from '../models/quote';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class QuoteDbService {
+
+  private sqlite = new SQLiteConnection(CapacitorSQLite);
+  private db!: SQLiteDBConnection;
+
+  quotes: Quote[] = [];
+
+  async initDB() {
+    this.db = await this.sqlite.createConnection(
+      'quotesdb',
+      false,
+      'no-encryption',
+      1,
+      false
+    );
+
+    await this.db.open();
+
+    await this.db.execute(`
+      CREATE TABLE IF NOT EXISTS quotes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        text TEXT NOT NULL,
+        author TEXT NOT NULL
+      );
+    `);
+
+    await this.loadQuotes();
+  }
+
+  async loadQuotes() {
+    const res = await this.db.query('SELECT * FROM quotes');
+    this.quotes = res.values || [];
+  }
+
+  async addQuote(quote: Quote) {
+    await this.db.run(
+      'INSERT INTO quotes (text, author) VALUES (?, ?)',
+      [quote.text, quote.author]
+    );
+
+    await this.loadQuotes();
+  }
+
+  async deleteQuote(id: number) {
+    await this.db.run(
+      'DELETE FROM quotes WHERE id = ?',
+      [id]
+    );
+
+    await this.loadQuotes();
+  }
+
+  getRandomQuote(): Quote {
+    return this.quotes[Math.floor(Math.random() * this.quotes.length)];
+  }
+}
