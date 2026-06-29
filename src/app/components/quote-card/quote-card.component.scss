@@ -31,3 +31,19 @@ ion-card {
   text-align: right;
   margin: 0;
 }
+/* Estilo del botón NEXT dentro de la tarjeta de cristal */
+ion-button {
+  --color: #00f2fe !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em;
+  
+  /* SOLUCIÓN: Separar el botón del borde derecho de la barra */
+  margin-right: 16px !important; 
+  
+  /* Transición suave para el efecto interactivo al pasar el mouse o presionar */
+  transition: transform 0.2s ease-in-out;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}

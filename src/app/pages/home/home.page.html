@@ -10,7 +10,11 @@
 <ion-content class="ion-padding">
   <!-- Section A: Feature Highlight Card -->
   <h2 class="ion-text-center">Cita Destacada</h2>
-  <app-quote-card *ngIf="quote" [quote]="quote" [canDelete]="false"></app-quote-card>
+  <app-quote-card *ngIf="quote" 
+                [quote]="quote" 
+                [allowDelete]="false" 
+                (next)="avanzarSiguienteCita()">
+</app-quote-card>
 
   <!-- Section B: Persistent Full List Grid Loop -->
   <h2 class="ion-padding-top">Todas tus Citas</h2>

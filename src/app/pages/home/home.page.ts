@@ -31,7 +31,10 @@ export class HomePage implements OnInit {
   quotes: Quote[] = [];
   quote: Quote | null = null;
   openModal: boolean = false;
-  allowDelete: boolean = false; // State variable bound to your *ngIf templates
+  allowDelete: boolean = false;
+  
+  // Guardamos el índice actual de la cita destacada para saber cuál mostrar
+  indiceCitaActual: number = 0;
 
   constructor(
     private quoteDb: QuoteDbService,
@@ -40,32 +43,42 @@ export class HomePage implements OnInit {
     addIcons({ addOutline, trashOutline });
   }
 
-  // Angular standard initial hook
   async ngOnInit() {
     await this.cargarListaCitas();
   }
 
-  // IONIC VIEW LIFECYCLE HOOK: Triggers automatically every time you navigate back here
   async ionViewWillEnter() {
-    await this.cargarConfiguraciones(); // Re-fetch toggle state from Preferences storage
-    await this.cargarListaCitas();      // Keep list records synchronized
+    await this.cargarConfiguraciones();
+    await this.cargarListaCitas();
   }
 
   async cargarListaCitas() {
     this.quotes = await this.quoteDb.obtenerCitas();
     
     if (this.quotes.length > 0) {
-      const randomIndex = Math.floor(Math.random() * this.quotes.length);
-      this.quote = this.quotes[randomIndex];
+      // Al cargar o refrescar, nos aseguramos de no desbordar el array
+      if (this.indiceCitaActual >= this.quotes.length) {
+        this.indiceCitaActual = 0;
+      }
+      this.quote = this.quotes[this.indiceCitaActual];
     } else {
       this.quote = { text: 'No hay citas registradas. ¡Agrega una nueva!', author: 'Sistema' };
     }
   }
 
+  // LÓGICA ORGÁNICA CIRCULAR: Avanza de 1 en 1, si llega al final vuelve a 0
+  avanzarSiguienteCita() {
+    if (this.quotes.length > 1) {
+      // Incrementa el índice y aplica operador residuo (%) para volver a cero automáticamente al pasar el límite
+      this.indiceCitaActual = (this.indiceCitaActual + 1) % this.quotes.length;
+      this.quote = this.quotes[this.indiceCitaActual];
+      console.log('Mostrando cita índice:', this.indiceCitaActual);
+    }
+  }
+
   async cargarConfiguraciones() {
     const config = await this.settingsService.getSettings();
-    this.allowDelete = config.allowDelete; // Force data bindings to update instantly
-    console.log('Home refresh complete. Current delete privilege:', this.allowDelete);
+    this.allowDelete = config.allowDelete;
   }
 
   async addQuote(nuevaCita: any) {
