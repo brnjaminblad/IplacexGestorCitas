@@ -1,17 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Settings</ion-title>
+    <ion-buttons slot="end">
+      <!-- NATIVE FIX: Draws the hamburger menu icon automatically to access navigation channels -->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Configuraciones</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-
-  <ion-item>
-    <ion-label>Allow delete quotes</ion-label>
-    <ion-toggle
-      [(ngModel)]="settings.allowDelete"
-      (ionChange)="save()">
-    </ion-toggle>
-  </ion-item>
-
+  <ion-list>
+    <ion-item>
+      <ion-label>Permitir borrar citas en inicio</ion-label>
+      <ion-toggle [(ngModel)]="settings.allowDelete" (ionChange)="toggleChanged()"></ion-toggle>
+    </ion-item>
+  </ion-list>
 </ion-content>

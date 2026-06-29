@@ -1,41 +1,45 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import {
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
-  IonCardContent,
-  IonButton
-} from '@ionic/angular/standalone';
-
 import { Quote } from '../../models/quote.model';
+import { 
+  IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, 
+  IonCardContent, IonButton, IonIcon 
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-quote-card',
-  standalone: true,
   templateUrl: './quote-card.component.html',
   styleUrls: ['./quote-card.component.scss'],
+  standalone: true,
   imports: [
     CommonModule,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonCard,
-    IonCardContent,
-    IonButton
+    IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, 
+    IonCardContent, IonButton, IonIcon
   ]
 })
 export class QuoteCardComponent {
-
+  // Receives the quote item properties from the parent dashboard grid view
   @Input() quote!: Quote;
 
-  // control de permisos desde Home
-  @Input() allowDelete = false;
+  // Input property mapping matching the previous home config
+  @Input() canDelete: boolean = false;
 
-  // eventos hacia Home
+  // TEMPLATE ALIGNMENT FIX: Maps exactly onto *ngIf="allowDelete" in your HTML template
+  @Input() allowDelete: boolean = false;
+
+  // TEMPLATE ALIGNMENT FIX: Maps exactly onto (click)="next.emit()"
   @Output() next = new EventEmitter<void>();
+
+  // TEMPLATE ALIGNMENT FIX: Maps exactly onto (click)="delete.emit(...)"
   @Output() delete = new EventEmitter<number>();
 
+  // Legacy fallback channel
+  @Output() onDelete = new EventEmitter<void>();
+
+  deleteClicked() {
+    if (this.quote && this.quote.id) {
+      this.delete.emit(this.quote.id);
+      this.onDelete.emit();
+    }
+  }
 }

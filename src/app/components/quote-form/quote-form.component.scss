@@ -1,0 +1,26 @@
+/* Transparent Dark Card input form fields layout control */
+ion-item {
+  --background: rgba(17, 24, 39, 0.6) !important;
+  --border-radius: 10px;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-width: 1px;
+  --highlight-color-valid: #00f2fe;
+  --color: #fff;
+  margin-bottom: 14px;
+  
+  ion-label {
+    color: #9ca3af !important;
+    font-weight: 500;
+  }
+}
+
+/* Action button configurations */
+ion-button[type="submit"] {
+  --background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  --box-shadow: 0 4px 16px rgba(0, 242, 254, 0.3);
+  --color: #0b0f19;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-top: 20px;
+  height: 48px;
+}

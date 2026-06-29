@@ -1,7 +1,6 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { QuoteDbService } from './services/quote-db.service';
 import { addIcons } from 'ionicons';
 import { homeOutline, settingsOutline } from 'ionicons/icons';
 import { 
@@ -20,14 +19,11 @@ import {
     IonApp, IonRouterOutlet, IonMenu, IonHeader, IonToolbar, 
     IonTitle, IonContent, IonList, IonItem, IonIcon, IonLabel, IonMenuToggle
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA] // Esto suprime los errores NG8001 de manera definitiva
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppComponent implements OnInit {
-  constructor(private quoteDb: QuoteDbService) {
+export class AppComponent {
+  constructor() {
+    // Registrar iconos visuales globales del menú lateral
     addIcons({ homeOutline, settingsOutline });
-  }
-
-  async ngOnInit() {
-    await this.quoteDb.inicializarBaseDeDatos();
   }
 }

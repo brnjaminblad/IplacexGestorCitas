@@ -1,45 +1,44 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <!-- Este botón abrirá automáticamente el menú lateral configurado -->
-      <ion-menu-button menu="main-menu"></ion-menu-button>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Citas Famosas</ion-title>
+    <ion-title>Inicio - Gestor Citas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+  <!-- Section A: Feature Highlight Card -->
+  <h2 class="ion-text-center">Cita Destacada</h2>
+  <app-quote-card *ngIf="quote" [quote]="quote" [canDelete]="false"></app-quote-card>
 
-  <!-- Cita actual -->
-<app-quote-card
-  *ngIf="quote"
-  [quote]="quote">
-</app-quote-card>
+  <!-- Section B: Persistent Full List Grid Loop -->
+  <h2 class="ion-padding-top">Todas tus Citas</h2>
+<ion-list lines="none" style="background: transparent; padding: 0;">
+  <ion-item *ngFor="let item of quotes" class="premium-list-item" style="--background: rgba(31, 41, 55, 0.45); margin-bottom: 12px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05); --padding-start: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+    <ion-label>
+      <h3 style="color: #fff; font-weight: 600; font-size: 1.05rem; line-height: 1.4; margin-bottom: 4px; white-space: normal;">"{{ item.text }}"</h3>
+      <p style="color: #00f2fe; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em;">— {{ item.author }}</p>
+    </ion-label>
+    <ion-button slot="end" fill="clear" color="danger" *ngIf="allowDelete" (click)="handleDeleteQuote(item.id)" style="--color: #ef4444;">
+      <ion-icon name="trash-outline" style="font-size: 1.25rem;"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-list>
 
-  <!-- FAB -->
+  <!-- Floating Add Modal Trigger Buttons -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="openModal = true">
-      +
+      <ion-icon name="add-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
-  <!-- Modal simple -->
-  <div class="modal" *ngIf="openModal">
-
-    <div class="modal-content">
-
-      <h2>Create a new quote</h2>
-
-      <app-quote-form
-        (add)="addQuote($event)">
-      </app-quote-form>
-
-      <ion-button expand="block" color="medium" (click)="openModal = false">
-        Close
-      </ion-button>
-
+  <!-- Input Form Entry Overlay Block Layer -->
+  <div class="custom-modal-overlay" *ngIf="openModal" style="position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999; display:flex; align-items:center; justify-content:center;">
+    <div class="modal-content-box" style="background:#fff; padding:20px; border-radius:8px; width:90%; max-width:400px;">
+      <h3>Nueva Cita Famosa</h3>
+      <app-quote-form (onAddQuote)="addQuote($event)"></app-quote-form>
+      <ion-button expand="block" color="light" class="ion-margin-top" (click)="openModal = false">Cancelar</ion-button>
     </div>
-
   </div>
-
 </ion-content>

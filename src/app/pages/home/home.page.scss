@@ -1,35 +1,59 @@
-ion-content {
-  --background: #f6f7fb;
+/* Typography Headings */
+h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #fff;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #fff 0%, #9ca3af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Card flotante moderna */
-app-quote-card {
-  display: block;
-  margin-top: 20px;
-}
-
-/* FAB estilo moderno */
+/* Premium Floating Action Buttons (Glow Anchor) */
 ion-fab-button {
-  --background: linear-gradient(135deg, #4f46e5, #7c3aed);
-  --box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
+  --background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  --box-shadow: 0 8px 24px rgba(0, 242, 254, 0.4);
+  --color: #0b0f19;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  &:hover {
+    transform: scale(1.1) rotate(90deg);
+  }
 }
 
-/* Modal estilo glass */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.4);
-  backdrop-filter: blur(6px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Frosted Glass Custom Overlay Modal Animation Box */
+.custom-modal-overlay {
+  backdrop-filter: blur(12px) !important;
+  background: rgba(11, 15, 25, 0.6) !important;
+  animation: fadeIn 0.3s ease-out;
 }
 
-.modal-content {
-  width: 90%;
-  max-width: 420px;
-  background: white;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+.modal-content-box {
+  background: rgba(31, 41, 55, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(16px);
+  color: #fff;
+  transform: translateY(0);
+  animation: slideUp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+
+  h3 {
+    font-weight: 700;
+    color: #fff;
+    margin-top: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 12px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }

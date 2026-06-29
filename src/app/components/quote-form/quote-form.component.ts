@@ -24,7 +24,14 @@ export class QuoteFormComponent {
 
   onSubmit() {
     if (this.quoteForm.valid) {
-      this.onAddQuote.emit(this.quoteForm.value);
+      // FIX: Extract Spanish values and map them onto the English property interface structure
+      const nuevaCita: Quote = {
+        text: this.quoteForm.value.texto,
+        author: this.quoteForm.value.autor
+      };
+
+      // Emit the correctly formatted object
+      this.onAddQuote.emit(nuevaCita);
       this.quoteForm.reset();
     }
   }

@@ -1,48 +1,33 @@
-.quote-card {
-
-  max-width: 760px;
-
-  margin: 40px auto;
-
-  border-radius: 24px;
-
-  padding: 24px;
-
-  box-shadow:
-    0 8px 30px rgba(0,0,0,.08);
-
+/* Frosted Glass center card template override layout */
+ion-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%) !important;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  margin: 8px 0 24px 0 !important;
+  padding: 12px;
 }
 
-.quote-text {
-
-  font-size: 1.6rem;
-
+/* Elegant Quote Typography styling blocks */
+.frase {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.35rem;
   font-style: italic;
-
-  text-align: center;
-
-  margin-bottom: 24px;
-
   line-height: 1.5;
-
-}
-
-.quote-author {
-
+  color: #ffffff;
   text-align: center;
-
-  font-size: 1rem;
-
-  color: var(--ion-color-medium);
-
-  margin-bottom: 24px;
-
+  margin-bottom: 16px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-ion-button{
-
-    max-width:220px;
-
-    margin:auto;
-
+.autor {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #00f2fe;
+  text-align: right;
+  margin: 0;
 }
