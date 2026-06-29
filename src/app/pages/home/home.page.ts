@@ -1,29 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent
-} from '@ionic/angular/standalone';
-
+import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { QuoteDbService } from '../../services/quote-db.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent
-  ]
+  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar]
 })
 export class HomePage {
 
@@ -31,8 +15,12 @@ export class HomePage {
 
   constructor(private quoteDb: QuoteDbService) {}
 
-  async ionViewWillEnter() {
-    await this.quoteDb.initDB();
-    this.quote = this.quoteDb.getRandomQuote();
+  ionViewWillEnter() {
+    this.randomQuote();
+  }
+
+  randomQuote() {
+    const list = this.quoteDb.quotes;
+    this.quote = list[Math.floor(Math.random() * list.length)];
   }
 }

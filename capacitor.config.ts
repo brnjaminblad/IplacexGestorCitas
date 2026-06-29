@@ -1,9 +1,10 @@
-import type { CapacitorConfig } from '@capacitor/cli';
+import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'IplacexGestorCitas_v2',
-  webDir: 'www'
+  appId: 'com.iplacex.gestorcitas',
+  appName: 'IplacexGestorCitas',
+  webDir: 'www',
+  bundledWebRuntime: false
 };
 
 export default config;

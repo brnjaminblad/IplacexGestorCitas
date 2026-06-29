@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { QuoteDbService } from './services/quote-db.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,13 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
   imports: [IonApp, IonRouterOutlet],
 })
 export class AppComponent {
-  constructor() {}
+
+  constructor(private quoteDb: QuoteDbService) {
+    this.initApp();
+  }
+
+  async initApp() {
+    await this.quoteDb.init();
+  }
+
 }

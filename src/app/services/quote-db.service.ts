@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { CapacitorSQLite, SQLiteConnection, SQLiteDBConnection } from '@capacitor-community/sqlite';
-import { Quote } from '../models/quote';
+import { Quote } from '../models/quote.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuoteDbService {
 
-  private sqlite = new SQLiteConnection(CapacitorSQLite);
+  private sqlite: SQLiteConnection = new SQLiteConnection(CapacitorSQLite);
   private db!: SQLiteDBConnection;
 
-  quotes: Quote[] = [];
+  public quotes: Quote[] = [];
 
-  async initDB() {
+  constructor() {}
+
+  async init() {
     this.db = await this.sqlite.createConnection(
       'quotesdb',
       false,
@@ -39,10 +41,10 @@ export class QuoteDbService {
     this.quotes = res.values || [];
   }
 
-  async addQuote(quote: Quote) {
+  async addQuote(q: Quote) {
     await this.db.run(
       'INSERT INTO quotes (text, author) VALUES (?, ?)',
-      [quote.text, quote.author]
+      [q.text, q.author]
     );
 
     await this.loadQuotes();
@@ -55,9 +57,5 @@ export class QuoteDbService {
     );
 
     await this.loadQuotes();
-  }
-
-  getRandomQuote(): Quote {
-    return this.quotes[Math.floor(Math.random() * this.quotes.length)];
   }
 }
