@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Preferences } from '@capacitor/preferences';
 
-@Injectable({ providedIn: 'root' })
+export interface AppSettings {
+  allowDelete: boolean;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
 export class SettingsService {
 
-  private key = 'app_settings';
+  private settings: AppSettings = {
+    allowDelete: true
+  };
 
-  async getSettings() {
-    const { value } = await Preferences.get({ key: this.key });
-
-    return value ? JSON.parse(value) : {
-      allowDelete: true
-    };
+  async getSettings(): Promise<AppSettings> {
+    return this.settings;
   }
 
-  async saveSettings(settings: any) {
-    await Preferences.set({
-      key: this.key,
-      value: JSON.stringify(settings)
-    });
+  async saveSettings(settings: AppSettings) {
+    this.settings = settings;
   }
 }

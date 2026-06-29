@@ -1,34 +1,39 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
-import { IonButton, IonInput, IonItem } from '@ionic/angular/standalone';
+import {
+  IonButton,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonTextarea
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-quote-form',
-  templateUrl: './quote-form.component.html',
   standalone: true,
+  templateUrl: './quote-form.component.html',
   imports: [
     CommonModule,
     ReactiveFormsModule,
     IonButton,
-    IonInput
+    IonInput,
+    IonItem,
+    IonLabel,
+    IonTextarea
   ]
 })
 export class QuoteFormComponent {
 
   @Output() add = new EventEmitter<any>();
 
-  form: FormGroup;
+  form = this.fb.group({
+    text: ['', [Validators.required, Validators.maxLength(1024)]],
+    author: ['', [Validators.required, Validators.maxLength(80)]]
+  });
 
-  constructor(private fb: FormBuilder) {
-
-    this.form = this.fb.group({
-      text: ['', [Validators.required, Validators.minLength(5)]],
-      author: ['', [Validators.required, Validators.minLength(2)]]
-    });
-
-  }
+  constructor(private fb: FormBuilder) {}
 
   submit() {
     if (this.form.valid) {

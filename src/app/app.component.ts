@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SettingsPage } from './pages/settings/settings.page';
 import {
   IonApp,
   IonMenu,
@@ -21,7 +22,7 @@ import { SettingsService } from './services/settings.service';
   standalone: true,
   imports: [
     FormsModule,
-
+    SettingsPage,
     IonApp,
     IonMenu,
     IonHeader,

@@ -1,31 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  IonContent, IonHeader, IonTitle, IonToolbar,
-  IonItem, IonLabel, IonToggle
-} from '@ionic/angular/standalone';
-
 import { FormsModule } from '@angular/forms';
-import { SettingsService } from '../../services/settings.service';
+import { SettingsService, AppSettings } from '../../services/settings.service';
+import {
+  IonContent,
+  IonItem,
+  IonLabel,
+  IonToggle,
+  IonHeader,
+  IonToolbar,
+  IonTitle
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-settings',
-  templateUrl: './settings.page.html',
   standalone: true,
+  templateUrl: './settings.page.html',
   imports: [
     CommonModule,
     FormsModule,
-    IonContent, IonHeader, IonTitle, IonToolbar,
-    IonItem, IonLabel, IonToggle
+    IonContent,
+    IonItem,
+    IonLabel,
+    IonToggle,
+    IonHeader,
+    IonToolbar,
+    IonTitle
   ]
 })
-export class SettingsPage {
+export class SettingsPage implements OnInit {
 
-  settings = { allowDelete: true };
+  settings!: AppSettings;
 
   constructor(private settingsService: SettingsService) {}
 
-  async ionViewWillEnter() {
+  async ngOnInit() {
     this.settings = await this.settingsService.getSettings();
   }
 

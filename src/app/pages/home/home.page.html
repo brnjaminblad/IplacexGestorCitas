@@ -1,40 +1,47 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Quotes App</ion-title>
-
-    <!-- ⚙️ SETTINGS -->
-    <ion-buttons slot="end">
-      <ion-button (click)="goSettings()">
-        <ion-icon name="settings"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-
+    <ion-title>Quotes</ion-title>
+  <ion-buttons slot="end">
+  <ion-menu-button></ion-menu-button>
+  </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
-  <!-- CITAS -->
-  <div *ngIf="quote">
+  <!-- Cita actual -->
+<app-quote-card
+  *ngIf="quote"
+  [quote]="quote"
+  [allowDelete]="settings?.allowDelete"
+  (next)="loadRandomQuote()"
+  (delete)="deleteQuote($event)">
+</app-quote-card>
 
-    <h2>{{ quote.text }}</h2>
-    <p>- {{ quote.author }}</p>
+  <!-- FAB -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openModal = true">
+      +
+    </ion-fab-button>
+  </ion-fab>
 
-    <ion-button
-      *ngIf="settings.allowDelete"
-      color="danger"
-      (click)="delete(quote.id)">
-      <ion-icon name="trash"></ion-icon>
-    </ion-button>
+  <!-- Modal simple -->
+  <div class="modal" *ngIf="openModal">
+
+    <div class="modal-content">
+
+      <h2>Create a new quote</h2>
+
+      <app-quote-form
+        (add)="addQuote($event)">
+      </app-quote-form>
+
+      <ion-button expand="block" color="medium" (click)="openModal = false">
+        Close
+      </ion-button>
+
+    </div>
 
   </div>
-
-  <div *ngIf="!quote">
-    <p>No hay citas</p>
-  </div>
-
- <ion-buttons slot="end">
-  <ion-menu-button></ion-menu-button>
-</ion-buttons>
 
 </ion-content>

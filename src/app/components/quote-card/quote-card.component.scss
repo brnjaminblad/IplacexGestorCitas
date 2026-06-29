@@ -1,0 +1,48 @@
+.quote-card {
+
+  max-width: 760px;
+
+  margin: 40px auto;
+
+  border-radius: 24px;
+
+  padding: 24px;
+
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.08);
+
+}
+
+.quote-text {
+
+  font-size: 1.6rem;
+
+  font-style: italic;
+
+  text-align: center;
+
+  margin-bottom: 24px;
+
+  line-height: 1.5;
+
+}
+
+.quote-author {
+
+  text-align: center;
+
+  font-size: 1rem;
+
+  color: var(--ion-color-medium);
+
+  margin-bottom: 24px;
+
+}
+
+ion-button{
+
+    max-width:220px;
+
+    margin:auto;
+
+}

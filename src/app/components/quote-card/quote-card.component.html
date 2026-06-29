@@ -1,3 +1,27 @@
-<p>
-  quote-card works!
-</p>
+<ion-card>
+
+  <!-- Texto de la cita -->
+  <ion-card-header>
+    <ion-card-title>{{ quote.text }}</ion-card-title>
+    <ion-card-subtitle>{{ quote.author }}</ion-card-subtitle>
+  </ion-card-header>
+
+  <!-- Acciones -->
+  <div style="display:flex; justify-content: space-between; padding: 10px;">
+
+    <!-- siguiente cita -->
+    <ion-button fill="clear" (click)="next.emit()">
+      Next
+    </ion-button>
+
+    <!-- 🗑 delete solo si settings lo permite -->
+    <ion-button
+      *ngIf="allowDelete"
+      color="danger"
+      (click)="delete.emit(quote.id!)">
+      🗑 Delete
+    </ion-button>
+
+  </div>
+
+</ion-card>

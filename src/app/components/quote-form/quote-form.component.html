@@ -1,11 +1,19 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
+<ion-item>
+  <ion-label position="stacked">Quote</ion-label>
+  <ion-textarea
+    [maxlength]="1024"
+    formControlName="text">
+  </ion-textarea>
+</ion-item>
 
-  <ion-input formControlName="text" placeholder="Cita"></ion-input>
+<ion-item>
+  <ion-label position="stacked">Author</ion-label>
+  <ion-input
+    [maxlength]="80"
+    formControlName="author">
+  </ion-input>
+</ion-item>
 
-  <ion-input formControlName="author" placeholder="Autor"></ion-input>
-
-  <ion-button type="submit" [disabled]="form.invalid">
-    Agregar
-  </ion-button>
-
-</form>
+<ion-button expand="block" (click)="submit()">
+  Add +
+</ion-button>

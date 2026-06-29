@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Configuración</ion-title>
+    <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
   <ion-item>
-    <ion-label>Permitir eliminar citas en Home</ion-label>
+    <ion-label>Allow delete quotes</ion-label>
     <ion-toggle
       [(ngModel)]="settings.allowDelete"
       (ionChange)="save()">

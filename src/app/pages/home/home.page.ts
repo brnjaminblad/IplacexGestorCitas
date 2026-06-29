@@ -1,66 +1,95 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  IonContent, IonHeader, IonTitle, IonToolbar,
-  IonFab, IonFabButton, IonIcon,
-  IonButtons, IonButton
-} from '@ionic/angular/standalone';
 
-import { Router } from '@angular/router';
-import { addIcons } from 'ionicons';
-import { add, settings, trash } from 'ionicons/icons';
-
-import { QuoteDbService } from '../../services/quote-db.service';
 import { SettingsService } from '../../services/settings.service';
+import { QuoteDbService } from '../../services/quote-db.service';
+import { Quote } from '../../models/quote.model';
+
+import { QuoteFormComponent } from '../../components/quote-form/quote-form.component';
+import { QuoteCardComponent } from '../../components/quote-card/quote-card.component';
+
+// Ionic standalone imports (IMPORTANTE)
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonMenuButton,
+  IonFab,
+  IonFabButton,
+  IonButton
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.page.html',
   standalone: true,
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
   imports: [
     CommonModule,
-    IonContent, IonHeader, IonTitle, IonToolbar,
-    IonFab, IonFabButton, IonIcon,
-    IonButtons, IonButton
+
+    // Ionic UI
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonMenuButton,
+    IonFab,
+    IonFabButton,
+    IonButton,
+
+    // Components
+    QuoteCardComponent,
+    QuoteFormComponent
   ]
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
-  quote: any = null;
+  quote!: Quote;
+  openModal = false;
+
   settings: any = { allowDelete: true };
 
   constructor(
-    public quoteDb: QuoteDbService,
-    private settingsService: SettingsService,
-    private router: Router
-  ) {
-    addIcons({ add, settings, trash });
+    private quoteDb: QuoteDbService,
+    private settingsService: SettingsService
+  ) {}
+
+  async ngOnInit() {
+    await this.quoteDb.init();
+
+    if (this.quoteDb.quotes.length === 0) {
+      await this.quoteDb.addQuote({
+        text: 'La imaginación es más importante que el conocimiento.',
+        author: 'Albert Einstein'
+      });
+    }
+
+    this.loadRandomQuote();
+
+    await this.loadSettings();
   }
 
-  async ionViewWillEnter() {
-    this.settings = await this.settingsService.getSettings();
-    await this.quoteDb.loadQuotes();
-    this.randomQuote();
+  loadRandomQuote() {
+    const quotes = this.quoteDb.quotes;
+    if (!quotes.length) return;
+
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    this.quote = quotes[randomIndex];
   }
 
-  randomQuote() {
-    const list = this.quoteDb.quotes;
-    if (!list.length) return;
-
-    this.quote = list[Math.floor(Math.random() * list.length)];
+  async addQuote(q: any) {
+    await this.quoteDb.addQuote(q);
+    this.loadRandomQuote();
+    this.openModal = false;
   }
-
-  goSettings() {
-    this.router.navigateByUrl('/settings');
-  }
-
-  openCreate() {
-    this.router.navigateByUrl('/quotes');
-  }
-
-  delete(id: number) {
-    if (!this.settings.allowDelete) return;
-    this.quoteDb.deleteQuote(id);
-    this.randomQuote();
-  }
+  async loadSettings() {
+  this.settings = await this.settingsService.getSettings();
+}
+async deleteQuote(id: number) {
+  await this.quoteDb.deleteQuote(id);
+  this.loadRandomQuote();
+}
 }

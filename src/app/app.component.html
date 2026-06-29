@@ -1,32 +1,23 @@
 <ion-app>
 
-  <!-- 🧩 MENÚ LATERAL -->
-  <ion-menu contentId="main-content">
+  <ion-menu side="end" contentId="main-content">
 
     <ion-header>
       <ion-toolbar>
-        <ion-title>Opciones</ion-title>
+        <ion-title>Settings</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content class="ion-padding">
-
-      <ion-item>
-        <ion-label>Configuración</ion-label>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>Permitir eliminar citas en Home</ion-label>
-        <ion-toggle [(ngModel)]="settings.allowDelete" (ionChange)="save()"></ion-toggle>
-      </ion-item>
-
+      <app-settings></app-settings>
     </ion-content>
 
   </ion-menu>
 
-  <!-- 📌 CONTENIDO PRINCIPAL -->
   <div class="ion-page" id="main-content">
+
     <ion-router-outlet></ion-router-outlet>
+
   </div>
 
 </ion-app>
