@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { Component } from '@angular/core';
+import { QuoteDbService } from '../services/quote-db.service';
 
 @Component({
   selector: 'app-quotes',
   templateUrl: './quotes.page.html',
-  styleUrls: ['./quotes.page.scss'],
-  standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  standalone: true
 })
-export class QuotesPage implements OnInit {
+export class QuotesPage {
 
-  constructor() { }
+  constructor(public quoteDb: QuoteDbService) {}
 
-  ngOnInit() {
+  async ionViewWillEnter() {
+    await this.quoteDb.initDB();
   }
 
+  delete(id: number) {
+    this.quoteDb.deleteQuote(id);
+  }
 }
